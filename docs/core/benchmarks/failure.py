@@ -1,6 +1,8 @@
 
 """See how slow failure creation is"""
 
+from __future__ import print_function
+
 import random
 from twisted.python import failure
 
@@ -60,7 +62,7 @@ from timer import timeit
 #     print 'easy failing', i, timeit(fail_easy, 1, i)
 
 for i in O:
-    print 'failing', i, timeit(fail, 1, i)
+    print('failing', i, timeit(fail, 1, i))
 
 # for i in O:
 #     print 'string failing', i, timeit(fail_str, 1, i)
