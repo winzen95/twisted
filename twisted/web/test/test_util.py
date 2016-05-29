@@ -90,11 +90,11 @@ class FailureElementTests(TestCase):
             TagLoader(tags.div(
                     tags.span(render="lineNumber"),
                     tags.span(render="sourceLine"))),
-            50, "    print 'hello'")
+            50, "    print('hello')")
         d = flattenString(None, element)
         expected = (
             u"<div><span>50</span><span>"
-            u" \N{NO-BREAK SPACE} \N{NO-BREAK SPACE}print 'hello'</span></div>")
+            u" \N{NO-BREAK SPACE} \N{NO-BREAK SPACE}print('hello')</span></div>")
         d.addCallback(
             self.assertEqual, expected.encode('utf-8'))
         return d

@@ -143,15 +143,17 @@ class ManholeLoopbackMixin:
         done = self.recvlineClient.expect("done")
 
         self._testwrite(
+            "from __future__ import print_function\n"
             "def foo(bar):\n"
-            "\tprint bar\n\n"
+            "\tprint(bar)\n\n"
             "foo(42)\n"
             "done")
 
         def finished(ign):
             self._assertBuffer(
-                [">>> def foo(bar):",
-                 "...     print bar",
+                [">>> from __future__ import print_function",
+                 ">>> def foo(bar):",
+                 "...     print(bar)",
                  "... ",
                  ">>> foo(42)",
                  "42",
@@ -164,17 +166,19 @@ class ManholeLoopbackMixin:
         done = self.recvlineClient.expect("done")
 
         self._testwrite(
+            "from __future__ import print_function\n"
             "class Foo:\n"
             "\tdef bar(self):\n"
-            "\t\tprint 'Hello, world!'\n\n"
+            "\t\tprint('Hello, world!')\n\n"
             "Foo().bar()\n"
             "done")
 
         def finished(ign):
             self._assertBuffer(
-                [">>> class Foo:",
+                [">>> from __future__ import print_function",
+                 ">>> class Foo:",
                  "...     def bar(self):",
-                 "...         print 'Hello, world!'",
+                 "...         print('Hello, world!')",
                  "... ",
                  ">>> Foo().bar()",
                  "Hello, world!",
@@ -312,10 +316,10 @@ class ManholeLoopbackMixin:
         CTRL-A can be used as HOME - returning cursor to beginning of
         current line buffer.
         """
-        self._testwrite('rint "hello"' + '\x01' + 'p')
-        d = self.recvlineClient.expect('print "hello"')
+        self._testwrite('bject' + '\x01' + 'o')
+        d = self.recvlineClient.expect('object')
         def cb(ignore):
-            self._assertBuffer(['>>> print "hello"'])
+            self._assertBuffer(['>>> object'])
         return d.addCallback(cb)
 
 
@@ -324,10 +328,10 @@ class ManholeLoopbackMixin:
         CTRL-E can be used as END - setting cursor to end of current
         line buffer.
         """
-        self._testwrite('rint "hello' + '\x01' + 'p' + '\x05' + '"')
-        d = self.recvlineClient.expect('print "hello"')
+        self._testwrite('bje' + '\x01' + 'o' + '\x05' + 'ct')
+        d = self.recvlineClient.expect('object')
         def cb(ignore):
-            self._assertBuffer(['>>> print "hello"'])
+            self._assertBuffer(['>>> object'])
         return d.addCallback(cb)
 
 

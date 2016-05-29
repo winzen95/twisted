@@ -373,6 +373,7 @@ The Channel
 .. code-block:: python
 
     
+    from __future__ import print_function
     from twisted.conch.ssh import channel, common
     
     class CatChannel(channel.SSHChannel):

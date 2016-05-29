@@ -147,6 +147,7 @@ Here is an example of a simple ``ClientFactory`` that uses the ``Echo`` protocol
 
 .. code-block:: python
 
+    from __future__ import print_function
     from twisted.internet.protocol import Protocol, ClientFactory
     from sys import stdout
 
@@ -223,6 +224,7 @@ a ``ReconnectingClientFactory`` :
 
 .. code-block:: python
 
+    from __future__ import print_function
     from twisted.internet.protocol import Protocol, ReconnectingClientFactory
     from sys import stdout
 

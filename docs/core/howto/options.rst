@@ -208,7 +208,7 @@ Here is an example:
     
     if config['user'] is not None:
         print("Hello", config['user'])
-    print "So, you want it:"
+    print("So, you want it:")
     
     if config['fast']:
         print("fast", end=' ')

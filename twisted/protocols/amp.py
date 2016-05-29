@@ -54,7 +54,7 @@ responder for our 'Sum' command::
     class JustSum(amp.AMP):
         def sum(self, a, b):
             total = a + b
-            print 'Did a sum: %d + %d = %d' % (a, b, total)
+            print('Did a sum: %d + %d = %d' % (a, b, total))
             return {'total': total}
         Sum.responder(sum)
 
@@ -96,7 +96,7 @@ advantage of this is very simple - just raise your exception normally::
     class JustDivide(amp.AMP):
         def divide(self, numerator, denominator):
             result = numerator / denominator
-            print 'Divided: %d / %d = %d' % (numerator, denominator, total)
+            print('Divided: %d / %d = %d' % (numerator, denominator, total))
             return {'result': result}
         Divide.responder(divide)
 
@@ -106,7 +106,7 @@ which can be handled normally as any L{Deferred} would be::
 
     def trapZero(result):
         result.trap(ZeroDivisionError)
-        print "Divided by zero: returning INF"
+        print("Divided by zero: returning INF")
         return 1e1000
     ClientCreator(reactor, amp.AMP).connectTCP(...).addCallback(
         lambda p: p.callRemote(Divide, numerator=1234,
