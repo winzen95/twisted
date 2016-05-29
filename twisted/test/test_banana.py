@@ -16,7 +16,12 @@ from twisted.python.compat import long
 
 class MathTests(unittest.TestCase):
     def test_int2b128(self):
-        funkylist = range(0,100) + range(1000,1100) + range(1000000,1000100) + [1024 **long(10)]
+        funkylist = (
+            range(0,100) +
+            range(1000,1100) +
+            range(1000000,1000100) +
+            [1024 **long(10)]
+            )
         for i in funkylist:
             x = StringIO.StringIO()
             banana.int2b128(i, x.write)
@@ -144,9 +149,9 @@ class BananaTests(BananaTestBase):
         @param name: The name of the type of the object.
 
         @raise: The failure exception is raised if L{Banana.sendEncoded} does
-            not raise L{banana.BananaError} or if the message associated with the
-            exception is not formatted to include the type of the unsupported
-            object.
+            not raise L{banana.BananaError} or if the message associated with
+            the exception is not formatted to include the type of the
+            unsupported object.
         """
         exc = self.assertRaises(banana.BananaError, self.enc.sendEncoded, obj)
         self.assertIn("Banana cannot send {0} objects".format(name), str(exc))
@@ -252,13 +257,13 @@ class BananaTests(BananaTestBase):
     def test_negativeLong(self):
         self.enc.sendEncoded(long(-1015))
         self.enc.dataReceived(self.io.getvalue())
-        assert self.result == long(-1015), "should be -1015l, got %s" % self.result
+        self.assertEqual(long(-1015), self.result)
 
 
     def test_integer(self):
         self.enc.sendEncoded(1015)
         self.enc.dataReceived(self.io.getvalue())
-        assert self.result == 1015, "should be 1015, got %s" % self.result
+        self.assertEqual(long(1015), self.result)
 
 
     def test_negative(self):
@@ -274,7 +279,10 @@ class BananaTests(BananaTestBase):
 
 
     def test_list(self):
-        foo = [1, 2, [3, 4], [30.5, 40.2], 5, ["six", "seven", ["eight", 9]], [10], []]
+        foo = [
+            1, 2, [3, 4], [30.5, 40.2], 5,
+            ["six", "seven", ["eight", 9]], [10], [],
+            ]
         self.enc.sendEncoded(foo)
         self.enc.dataReceived(self.io.getvalue())
         assert self.result == foo, "%s!=%s" % (repr(self.result), repr(foo))
@@ -285,10 +293,14 @@ class BananaTests(BananaTestBase):
         Test feeding the data byte per byte to the receiver. Normally
         data is not split.
         """
-        foo = [1, 2, [3, 4], [30.5, 40.2], 5,
-               ["six", "seven", ["eight", 9]], [10],
-               # TODO: currently the C implementation's a bit buggy...
-               sys.maxint * long(3), sys.maxint * long(2), sys.maxint * long(-2)]
+        foo = [
+                1, 2, [3, 4], [30.5, 40.2], 5,
+                ["six", "seven", ["eight", 9]], [10],
+                # TODO: currently the C implementation's a bit buggy...
+                sys.maxint * long(3),
+                sys.maxint * long(2),
+                sys.maxint * long(-2),
+                ]
         self.enc.sendEncoded(foo)
         self.feed(self.io.getvalue())
         assert self.result == foo, "%s!=%s" % (repr(self.result), repr(foo))
@@ -337,16 +349,18 @@ class BananaTests(BananaTestBase):
             pass
 
     def test_crashNegativeLong(self):
-        # There was a bug in cBanana which relied on negating a negative integer
-        # always giving a positive result, but for the lowest possible number in
-        # 2s-complement arithmetic, that's not true, i.e.
-        #     long x = -2147483648;
-        #     long y = -x;
-        #     x == y;  /* true! */
-        # (assuming 32-bit longs)
+        """
+        There was a bug in cBanana which relied on negating a negative integer
+        always giving a positive result, but for the lowest possible number in
+        2s-complement arithmetic, that's not true, i.e.
+            long x = -2147483648;
+            long y = -x;
+            x == y;  /* true! */
+        (assuming 32-bit longs)
+        """
         self.enc.sendEncoded(-2147483648)
         self.enc.dataReceived(self.io.getvalue())
-        assert self.result == -2147483648, "should be -2147483648, got %s" % self.result
+        self.assertEqual(-2147483648, self.result)
 
 
     def test_sizedIntegerTypes(self):
@@ -371,7 +385,8 @@ class BananaTests(BananaTestBase):
         baseNegOut = '\x7f\x7f\x7f\x07\x83'
         self.assertEqual(self.encode(baseNegIn + 2), '\x7e' + baseNegOut)
         self.assertEqual(self.encode(baseNegIn + 1), '\x7f' + baseNegOut)
-        self.assertEqual(self.encode(baseNegIn + 0), '\x00\x00\x00\x00\x08\x83')
+        self.assertEqual(
+            self.encode(baseNegIn + 0), '\x00\x00\x00\x00\x08\x83')
 
         baseLongNegOut = '\x00\x00\x00\x08\x86'
         self.assertEqual(self.encode(baseNegIn - 1), '\x01' + baseLongNegOut)
