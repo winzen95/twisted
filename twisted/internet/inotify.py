@@ -39,7 +39,7 @@ from twisted.python.compat import long
 
 # from /usr/src/linux/include/linux/inotify.h
 
-IN_ACCESS = long(0x00000001         # File was accessed
+IN_ACCESS = long(0x00000001)         # File was accessed
 IN_MODIFY = long(0x00000002)         # File was modified
 IN_ATTRIB = long(0x00000004)         # Metadata changed
 IN_CLOSE_WRITE = long(0x00000008)    # Writeable file was closed
