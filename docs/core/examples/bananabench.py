@@ -1,7 +1,7 @@
 # Copyright (c) Twisted Matrix Laboratories.
 # See LICENSE for details.
 
-from twisted.python import compat
+from twisted.python.compat import long
 import sys
 import time
 try:
@@ -72,8 +72,8 @@ testData = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]
 bench.runTests(testData)
 testData = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
 bench.runTests(testData)
-testData = [compat.long(1), compat.long(2), compat.long(3), compat.long(4), compat.long(5), compat.long(6),
-            compat.long(7), compat.long(8), compat.long(9), compat.long(10)]
+testData = [long(1), long(2), long(3), long(4), long(5), long(6),
+            long(7), long(8), long(9), long(10)]
 bench.runTests(testData)
 testData = [1, 2, [3, 4], [30.5, 40.2], 5, ["six", "seven", ["eight", 9]], [10], []]
 bench.runTests(testData)

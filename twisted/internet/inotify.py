@@ -35,25 +35,25 @@ import struct
 from twisted.internet import fdesc
 from twisted.internet.abstract import FileDescriptor
 from twisted.python import log, _inotify
-from twisted.python import compat
+from twisted.python.compat import long
 
 # from /usr/src/linux/include/linux/inotify.h
 
-IN_ACCESS = compat.long(0x00000001         # File was accessed
-IN_MODIFY = compat.long(0x00000002)         # File was modified
-IN_ATTRIB = compat.long(0x00000004)         # Metadata changed
-IN_CLOSE_WRITE = compat.long(0x00000008)    # Writeable file was closed
-IN_CLOSE_NOWRITE = compat.long(0x00000010)  # Unwriteable file closed
-IN_OPEN = compat.long(0x00000020)           # File was opened
-IN_MOVED_FROM = compat.long(0x00000040)     # File was moved from X
-IN_MOVED_TO = compat.long(0x00000080)       # File was moved to Y
-IN_CREATE = compat.long(0x00000100)         # Subfile was created
-IN_DELETE = compat.long(0x00000200)         # Subfile was delete
-IN_DELETE_SELF = compat.long(0x00000400)    # Self was deleted
-IN_MOVE_SELF = compat.long(0x00000800)      # Self was moved
-IN_UNMOUNT = compat.long(0x00002000)        # Backing fs was unmounted
-IN_Q_OVERFLOW = compat.long(0x00004000)     # Event queued overflowed
-IN_IGNORED = compat.long(0x00008000)        # File was ignored
+IN_ACCESS = long(0x00000001         # File was accessed
+IN_MODIFY = long(0x00000002)         # File was modified
+IN_ATTRIB = long(0x00000004)         # Metadata changed
+IN_CLOSE_WRITE = long(0x00000008)    # Writeable file was closed
+IN_CLOSE_NOWRITE = long(0x00000010)  # Unwriteable file closed
+IN_OPEN = long(0x00000020)           # File was opened
+IN_MOVED_FROM = long(0x00000040)     # File was moved from X
+IN_MOVED_TO = long(0x00000080)       # File was moved to Y
+IN_CREATE = long(0x00000100)         # Subfile was created
+IN_DELETE = long(0x00000200)         # Subfile was delete
+IN_DELETE_SELF = long(0x00000400)    # Self was deleted
+IN_MOVE_SELF = long(0x00000800)      # Self was moved
+IN_UNMOUNT = long(0x00002000)        # Backing fs was unmounted
+IN_Q_OVERFLOW = long(0x00004000)     # Event queued overflowed
+IN_IGNORED = long(0x00008000)        # File was ignored
 
 IN_ONLYDIR = 0x01000000         # only watch the path if it is a directory
 IN_DONT_FOLLOW = 0x02000000     # don't follow a sym link

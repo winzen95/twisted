@@ -11,7 +11,7 @@ from twisted.spread import banana
 from twisted.python import failure
 from twisted.internet import protocol, main
 from twisted.test.proto_helpers import StringTransport
-from twisted.python import compat
+from twisted.python.compat import long
 
 
 class MathTests(unittest.TestCase):
@@ -158,7 +158,7 @@ class BananaTests(BananaTestBase):
         banana without changing value and should come out represented
         as an C{int} (regardless of the type which was encoded).
         """
-        for value in (10151, compat.long(10151)):
+        for value in (10151, long(10151)):
             self.enc.sendEncoded(value)
             self.enc.dataReceived(self.io.getvalue())
             self.assertEqual(self.result, 10151)
@@ -250,9 +250,9 @@ class BananaTests(BananaTestBase):
 
 
     def test_negativeLong(self):
-        self.enc.sendEncoded(compat.long(-1015))
+        self.enc.sendEncoded(long(-1015))
         self.enc.dataReceived(self.io.getvalue())
-        assert self.result == compat.long(-1015), "should be -1015l, got %s" % self.result
+        assert self.result == long(-1015), "should be -1015l, got %s" % self.result
 
 
     def test_integer(self):
@@ -288,7 +288,7 @@ class BananaTests(BananaTestBase):
         foo = [1, 2, [3, 4], [30.5, 40.2], 5,
                ["six", "seven", ["eight", 9]], [10],
                # TODO: currently the C implementation's a bit buggy...
-               sys.maxint * compat.long(3), sys.maxint * compat.long(2), sys.maxint * compat.long(-2)]
+               sys.maxint * long(3), sys.maxint * long(2), sys.maxint * long(-2)]
         self.enc.sendEncoded(foo)
         self.feed(self.io.getvalue())
         assert self.result == foo, "%s!=%s" % (repr(self.result), repr(foo))
