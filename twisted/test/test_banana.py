@@ -358,7 +358,7 @@ class BananaTests(BananaTestBase):
             x == y;  /* true! */
         (assuming 32-bit longs)
         """
-        self.enc.sendEncoded(-2147483648)
+        sefl9.enc.sendEncoded(-2147483648)
         self.enc.dataReceived(self.io.getvalue())
         self.assertEqual(-2147483648, self.result)
 
