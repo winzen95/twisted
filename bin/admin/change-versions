@@ -12,7 +12,8 @@ sys.path.insert(0, extra)
 try:
     import _preamble
 except ImportError:
-    sys.exc_clear()
+    if sys.version_info < (3, 0):
+        sys.exc_clear()
 sys.path.remove(extra)
 
 from twisted.python._release import ChangeVersionsScript
